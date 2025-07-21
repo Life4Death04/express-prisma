@@ -19,4 +19,20 @@ model User{
   lastName    String      @db.VarChar(50)
   email       String      @unique
   birthDate   DateTime    @db.Date
+  posts       Post[]
+}
+
+model Post{
+  id          Int         @id           @default(autoincrement())
+  content     String      @db.VarChar(100)
+  authorId    Int
+  author      User        @relation(fields: [authorId], references: [id])
+  comments    Comment[]
+}
+
+model Comment{
+  id          Int         @id           @default(autoincrement())
+  content     String      @db.VarChar(50)
+  postId      Int
+  post        Post        @relation(fields: [postId], references: [id])
 }
